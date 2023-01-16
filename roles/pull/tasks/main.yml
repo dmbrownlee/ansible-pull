@@ -3,7 +3,6 @@
   ansible.builtin.dnf:
     name:
       - ansible-collection-community-general
-      - ansible-collection-ansible-posix
       - openssh
     state: present
 - name: Ensure directory for ansible auth files exists
