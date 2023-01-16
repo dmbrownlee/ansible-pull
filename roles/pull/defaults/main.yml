@@ -1,5 +1,9 @@
 ---
 provisioning:
+  vault_password_file: /etc/ansible/auth/vaultpw
+  git:
+    repo_url: https://github.com/dmbrownlee/home.git
+    branch: release
   group:
     name: ansible
     gid: 1000

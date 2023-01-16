@@ -6,7 +6,7 @@ Documentation=man:ansible-pull(1)
 Type=oneshot
 WorkingDirectory=/home/{{ provisioning.user.name }}
 User={{ provisioning.user.name }}
-ExecStart=/usr/bin/ansible-pull --vault-password-file /home/{{ provisioning.user.name }}/.vaultpw -o -U https://github.com/dmbrownlee/home.git -C release
+ExecStart=/usr/bin/ansible-pull --vault-password-file {{ provisioning.vault_password_file }} -o -U {{ provisioning.git.repo_url }} -C {{ provisioning.git.branch }}
 
 # hardening options
 #  details: https://www.freedesktop.org/software/systemd/man/systemd.exec.html

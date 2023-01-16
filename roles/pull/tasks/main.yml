@@ -1,10 +1,18 @@
 ---
-- name: Ensure ansible collections are installed
+- name: Ensure required packages are installed
   ansible.builtin.dnf:
     name:
       - ansible-collection-community-general
       - ansible-collection-ansible-posix
+      - openssh
     state: present
+- name: Ensure directory for ansible auth files exists
+  ansible.builtin.file:
+    path: /etc/ansible/auth
+    state: directory
+    owner: root
+    group: "{{ provisioning.group.name }}"
+    mode: '0750'
 - name: Ensure default directory for custom facts exists
   ansible.builtin.file:
     path: /etc/ansible/fact.d
@@ -30,6 +38,8 @@
     group: "{{ provisioning.group.name }}"
     groups: wheel
     append: yes
+    #generate_ssh_key: yes
+    #ssh_key_file: /etc/ansible/auth/ansible
     state: present
 - name: Ensure provisioning user can use sudo
   ansible.builtin.copy:
@@ -61,4 +71,5 @@
   ansible.posix.authorized_key:
     user: "{{ provisioning.user.name }}"
     state: present
-    key: "{{ lookup('file', '/etc/ansible/keys/' + provisioning.user.name + '.pub') }}"
+    key: "{{ provisioning.user.public_key_url }}"
+  when: provisioning.user.public_key_url is defined

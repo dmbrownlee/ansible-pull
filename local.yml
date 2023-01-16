@@ -1,17 +1,7 @@
 ---
-- name: Ensure all hosts have the same standard operating environment
+- name: Configure localhost using ansible-pull
   hosts: localhost
   connection: local
   become: yes
   roles:
-    - baseline
-- name: Ensure local accounts are created for hosts in the home.test domain
-  hosts: local_accounts
-  roles:
-    - local-accounts
-- name: Configure Fedora installs as Workstations
-  hosts: fedora
-  connection: local
-  become: yes
-  roles:
-    - graphical-desktop-environment
+    - pull
